@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build EXE",
+            "type": "shell",
+            //g++ -o mp4gif.exe mp4gif.cpp -Id:/dev/opensource/ffmpeg_build/include -Ld:/dev/opensource/ffmpeg_build/lib -lavformat -lavcodec -lavutil -lswscale -lavfilter
+            "command": "g++",
+            "args": [
+                "-g",
+                "-o",
+                "mp4gif.exe",
+                "mp4gif.cpp",
+                "-Id:/dev/opensource/ffmpeg_build/include",
+                "-Ld:/dev/opensource/ffmpeg_build/lib",
+                "-lavformat",
+                "-lavcodec",
+                "-lavutil",
+                "-lswscale",
+                "-lavfilter"
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Compiles the main executable and links it against the DLL."
+        },
+        {
+            "label": "Build All",
+            "dependsOn": [
+                "Build EXE"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Builds the DLL and then the main executable."
+        }
+    ]
+}
