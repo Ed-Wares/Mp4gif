@@ -8,9 +8,12 @@ Here is a quick look at the application:
 ![Demo](https://github.com/Ed-Wares/Mp4gif/blob/main/DemoMp4gif.gif?raw=true)
 
 ## Usage
-To convert a mp4 to gif file with default configurations open command line and run ```mp4gif.exe source.mp4 output.gif```
+To convert a mp4 to gif file with default configurations open command line and run:
+```
+mp4gif.exe source.mp4 output.gif
+```
 
-For more advanced options you can optionally include custom pre-filters like the following for cropping the video.
+For more advanced options you can optionally include custom pre-filters like the following for cropping the video:
 ```
 mp4gif input.mp4 output.gif "crop=w:h:x:y"
 ```
