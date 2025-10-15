@@ -59,8 +59,5 @@ g++ --version
     make install
   ```
 
-Build binaries by running the build.bat script or from VsCode by running the Build and Debug Task.
-
-
-## Misc
+Build binaries by running the ```build.bat``` script or from VsCode by running the Build and Debug Task.
 
