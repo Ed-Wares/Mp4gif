@@ -43,8 +43,8 @@ g++ --version
 ```
 - Optionally, install Visual Studio Code IDE (with C++ extensions).  [VsCode](https://code.visualstudio.com/download)
 
-- Build ffmpeg version 8.0 library
-    - Download and extract the ffmpeg 8.0 source code.
+- Build ffmpeg version 7.1 library
+    - Download and extract the ffmpeg 7.1.2 source code.
   ```
     mkdir -p /d/dev/opensource/
     cd /d/dev/opensource/
