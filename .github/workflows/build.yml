@@ -57,18 +57,20 @@ jobs:
         # You can change this to /c/ if /d/ is unavailable.
         mkdir -p /d/dev/opensource/
         cd /d/dev/opensource/
-        echo "⬇️ Downloading FFmpeg..."
+        echo "Downloading ffmpeg-7.1.2 ..."
         wget -q https://ffmpeg.org/releases/ffmpeg-7.1.2.tar.xz
         echo "Extracting..."
         tar -xf ffmpeg-7.1.2.tar.xz
         cd ffmpeg-7.1.2
+        echo "Configuring..."
         ./configure --enable-shared --prefix=/d/dev/opensource/ffmpeg_build
+        echo "Building..."
         make -j$(nproc)
         make install
         echo "Artifacts are in /d/dev/opensource/ffmpeg_build"
     
     # 3. (Optional) verify the build
-    - name: Verify Build
+    - name: Verify ffmpeg Build
       run: |
         /d/dev/opensource/ffmpeg_build/bin/ffmpeg.exe -version
 
