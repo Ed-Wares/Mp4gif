@@ -30,6 +30,11 @@ cmake .. -G "MinGW Makefiles"
 REM cmake .. -G "Visual Studio 17 2022"
 cmake --build . --config Release
 
+if %ERRORLEVEL% geq 1 (
+    echo CMake build failed!
+    exit /b 1
+)
+
 echo copying binaries to the distrib folder...
 copy /Y *.exe "%distrib_dir%"
 copy /Y *.dll "%distrib_dir%"

@@ -1,0 +1,87 @@
+# This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
+# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
+name: Build
+
+on:
+  # This workflow is designed to be called by other workflows.
+  workflow_call:
+    inputs:
+      git_ref:
+        description: 'The Git reference (e.g., branch or tag) to checkout'
+        required: true
+        type: string
+      version_string:
+        description: 'Version string for the artifact name'
+        required: true
+        type: string
+    outputs:
+      artifact_name:
+        description: 'The name of the generated package file (e.g., test.zip)'
+        value: ${{ jobs.build_package.outputs.package_name }}
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: windows-latest
+    outputs:
+      artifact_id: ${{ steps.upload-artifact.outputs.artifact_id }}
+    defaults:
+      run:
+        shell: msys2 {0} # This sets the default shell for subsequent steps to MSYS2
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.git_ref }} # Use the reference passed from the calling workflow
+
+    - name: Cache MSYS2
+      uses: actions/cache@v4
+      with:
+        path: C:\msys64 # Or wherever MSYS2 is installed
+        key: ${{ runner.os }}-msys2-ffmpeg # Or a more appropriate key
+    
+    - uses: msys2/setup-msys2@v2 # Setup MSYS2 environment
+      with:
+        msystem: UCRT64 # Or MINGW64, MINGW32, etc. depending on your target
+        update: true
+        install: git base-devel mingw-w64-ucrt-x86_64-toolchain mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-yasm mingw-w64-ucrt-x86_64-nasm zip wget tar
+    
+    - name: Get ffmpeg Script
+      run: |
+        echo "download and build ffmpeg"
+        # NOTE: GitHub Runners usually have a D: drive (Temp storage), 
+        # but we map it to a folder for safety. 
+        # You can change this to /c/ if /d/ is unavailable.
+        mkdir -p /d/dev/opensource/
+        cd /d/dev/opensource/
+        echo "⬇️ Downloading FFmpeg..."
+        wget -q https://ffmpeg.org/releases/ffmpeg-7.1.2.tar.xz
+        echo "Extracting..."
+        tar -xf ffmpeg-7.1.2.tar.xz
+        cd ffmpeg-7.1.2
+        ./configure --enable-shared --prefix=/d/dev/opensource/ffmpeg_build
+        make -j$(nproc)
+        make install
+        echo "Artifacts are in /d/dev/opensource/ffmpeg_build"
+    
+    # 3. (Optional) verify the build
+    - name: Verify Build
+      run: |
+        /d/dev/opensource/ffmpeg_build/bin/ffmpeg.exe -version
+
+    - name: Run Bash Script
+      run: |
+        echo "Running build.bat..."
+        ./build.bat # Execute your build script
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      id: upload-artifact
+      with:
+        name: build-binary-${{ inputs.version_string }}
+        path: ./distrib/*.zip # Upload the generated ZIP file
+        retention-days: 1
+
