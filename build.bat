@@ -39,6 +39,8 @@ if %ERRORLEVEL% geq 1 (
 echo copying binaries to the distrib folder...
 copy /Y *.exe "%distrib_dir%"
 copy /Y *.dll "%distrib_dir%"
+copy /Y "%current_dir%/test.mp4" "%distrib_dir%"
+copy /Y "%current_dir%/LICENSE" "%distrib_dir%"
 popd
 
 pushd "%distrib_dir%.." && "%MSYS_ROOT%\usr\bin\zip.exe" -r %prj_name%.zip %prj_name% && popd

@@ -93,6 +93,11 @@ if(WIN32)
             "${COMPILER_BIN_DIR}/libstdc++-*.dll"
             "${COMPILER_BIN_DIR}/libgcc_s_*.dll"
             "${COMPILER_BIN_DIR}/libwinpthread-*.dll"
+            # Compression Libraries (Required by FFmpeg)
+            "${COMPILER_BIN_DIR}/zlib1.dll"
+            "${COMPILER_BIN_DIR}/libbz2-*.dll"
+            "${COMPILER_BIN_DIR}/liblzma-*.dll"
+            "${COMPILER_BIN_DIR}/libiconv-*.dll" # Character encoding        
         )
         
         message(STATUS "Found Compiler Runtime DLLs in: ${COMPILER_BIN_DIR}")
