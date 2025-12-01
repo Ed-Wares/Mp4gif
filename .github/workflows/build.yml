@@ -36,17 +36,13 @@ jobs:
       uses: actions/checkout@v4
       with:
         ref: ${{ inputs.git_ref }} # Use the reference passed from the calling workflow
-
-    - name: Cache MSYS2
-      uses: actions/cache@v4
-      with:
-        path: C:\msys64 # Or wherever MSYS2 is installed
-        key: ${{ runner.os }}-msys2-ffmpeg # Or a more appropriate key
-    
+   
     - uses: msys2/setup-msys2@v2 # Setup MSYS2 environment
       with:
         msystem: UCRT64 # Or MINGW64, MINGW32, etc. depending on your target
         update: true
+        # Enable the built-in package cache
+        cache: true        
         install: git base-devel mingw-w64-ucrt-x86_64-toolchain mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-yasm mingw-w64-ucrt-x86_64-nasm zip wget tar
     
     - name: Get ffmpeg Script
