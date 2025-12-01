@@ -44,7 +44,14 @@ jobs:
         # Enable the built-in package cache
         cache: true        
         install: git base-devel mingw-w64-ucrt-x86_64-toolchain mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-yasm mingw-w64-ucrt-x86_64-nasm zip wget tar
-    
+
+    - name: Cache FFmpeg Build
+      id: cache-ffmpeg
+      uses: actions/cache@v4
+      with:
+        path: D:/dev/opensource/ffmpeg_build
+        key: ffmpeg-7.1.2-build-${{ runner.os }}
+
     - name: Get ffmpeg Script
       run: |
         echo "download and build ffmpeg"
