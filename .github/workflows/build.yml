@@ -52,9 +52,14 @@ jobs:
     - name: Get ffmpeg Script
       run: |
         echo "download and build ffmpeg"
-        # NOTE: GitHub Runners usually have a D: drive (Temp storage), 
-        # but we map it to a folder for safety. 
+        # NOTE: GitHub Runners usually have a D: drive (Temp storage), but we map it to a folder for safety. 
         # You can change this to /c/ if /d/ is unavailable.
+        TARGET_FILE="/d/dev/opensource/ffmpeg_build/bin/ffmpeg.exe"
+        if [ -f "$TARGET_FILE" ]; then
+          echo "Build artifact already exists at: $TARGET_FILE"
+          echo "Skipping download and compilation."
+          exit 0
+        fi
         mkdir -p /d/dev/opensource/
         cd /d/dev/opensource/
         echo "Downloading ffmpeg-7.1.2 ..."
