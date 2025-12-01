@@ -10,7 +10,7 @@
                 "-g",
                 "-o",
                 "mp4gif.exe",
-                "mp4gif.cpp",
+                "src/mp4gif.cpp",
                 "-Id:/dev/opensource/ffmpeg_build/include",
                 "-Ld:/dev/opensource/ffmpeg_build/lib",
                 "-lavformat",

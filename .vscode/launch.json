@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Build and Debug",
+            "name": "Build mp4gif and Debug",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/mp4gif.exe",

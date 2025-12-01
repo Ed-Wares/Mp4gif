@@ -32,7 +32,7 @@ Prerequesites required for building source
 - Run the installer and follow the steps of the installation wizard. Note that MSYS2 requires 64 bit Windows 8.1 or newer.
 - Run Msys2 terminal and from this terminal, install the MinGW-w64 toolchain by running the following command:
 ```
-pacman -S --needed make base-devel mingw-w64-ucrt-x86_64-toolchain mingw-w64-ucrt-x86_64-yasm mingw-w64-ucrt-x86_64-nasm
+pacman -S --needed make base-devel mingw-w64-ucrt-x86_64-toolchain mingw-w64-ucrt-x86_64-yasm mingw-w64-ucrt-x86_64-nasm mingw-w64-ucrt-x86_64-cmake zip
 ```
 - Accept the default number of packages in the toolchain group by pressing Enter (default=all).
 - Enter Y when prompted whether to proceed with the installation.
